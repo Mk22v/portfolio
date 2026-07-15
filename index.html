@@ -450,9 +450,17 @@
       nav.classList.toggle('scrolled', y > 20);
       topBtn.classList.toggle('show', y > 600);
 
-      // progress fill
-      const docH = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = docH > 0 ? Math.min(1, Math.max(0, y / docH)) : 0;
+      // progress fill — bounded to the actual first→last section span,
+      // so it reaches 100% exactly when Contact comes into view,
+      // regardless of how short the footer is.
+      const firstSection = sections[0];
+      const lastSection = sections[sections.length - 1];
+      const rangeStart = firstSection.offsetTop;
+      const rangeEnd = lastSection.offsetTop - (window.innerHeight * 0.4);
+      const range = Math.max(1, rangeEnd - rangeStart);
+      let progress = Math.min(1, Math.max(0, (y - rangeStart) / range));
+      const atBottomCheck = (window.innerHeight + y) >= (document.documentElement.scrollHeight - 4);
+      if(atBottomCheck) progress = 1;
       railFill.style.height = (progress * 100) + '%';
 
       // active section
@@ -462,6 +470,11 @@
         const rect = sec.getBoundingClientRect();
         if(rect.top <= probe) activeId = sec.id;
       });
+
+      // if we've hit the bottom of the page, always land on the last section —
+      // a short footer can end before it ever crosses the probe line above
+      const atBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 4);
+      if(atBottom) activeId = sectionIds[sectionIds.length - 1];
 
       navAnchors.forEach(a=>a.classList.toggle('active', a.dataset.target === activeId));
       const activeAnchor = navAnchors.find(a=>a.dataset.target === activeId);

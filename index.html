@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mohan Kumar V — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0f1a;
+    --surface:#111827;
+    --surface-2:#161f33;
+    --border:#243049;
+    --text:#e7ecf5;
+    --text-dim:#8a95ab;
+    --amber:#f5a623;
+    --green:#3ddc84;
+    --red:#ef5a5a;
+    --font-display:'Space Grotesk', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+    --font-body:'Inter', sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
+  }
+
+  /* background grid texture */
+  .grid-bg{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size:48px 48px;
+    mask-image:radial-gradient(circle at 50% 0%, black, transparent 75%);
+  }
+
+  a{color:inherit; text-decoration:none;}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--green); outline-offset:3px;}
+
+  .wrap{max-width:960px; margin:0 auto; padding:0 28px; position:relative; z-index:1;}
+
+  /* ---- Nav ---- */
+  nav{
+    position:sticky; top:0; z-index:50;
+    backdrop-filter:blur(10px);
+    background:rgba(10,15,26,0.75);
+    border-bottom:1px solid var(--border);
+  }
+  nav .wrap{display:flex; align-items:center; justify-content:space-between; height:64px;}
+  .logo{font-family:var(--font-mono); font-size:14px; font-weight:600; letter-spacing:0.02em; display:flex; align-items:center; gap:10px;}
+  .dot{
+    width:8px; height:8px; border-radius:50%; background:var(--green);
+    box-shadow:0 0 0 0 rgba(61,220,132,0.6);
+    animation:pulse 2.2s infinite;
+  }
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(61,220,132,0.45);}
+    70%{box-shadow:0 0 0 8px rgba(61,220,132,0);}
+    100%{box-shadow:0 0 0 0 rgba(61,220,132,0);}
+  }
+  .navlinks{display:flex; gap:28px; font-family:var(--font-mono); font-size:12.5px; color:var(--text-dim);}
+  .navlinks a{transition:color 0.2s;}
+  .navlinks a:hover{color:var(--amber);}
+  @media (max-width:640px){ .navlinks{display:none;} }
+
+  /* ---- Hero ---- */
+  header.hero{padding:96px 0 72px; position:relative;}
+  .eyebrow{
+    font-family:var(--font-mono); font-size:12.5px; color:var(--amber);
+    display:flex; align-items:center; gap:10px; margin-bottom:22px; letter-spacing:0.03em;
+  }
+  .eyebrow .rule{width:32px; height:1px; background:var(--amber); display:inline-block;}
+  h1{
+    font-family:var(--font-display); font-weight:700;
+    font-size:clamp(2.4rem, 6vw, 4.2rem);
+    line-height:1.04; letter-spacing:-0.01em;
+    margin-bottom:20px;
+  }
+  h1 span{color:var(--green);}
+  .tagline{
+    font-size:clamp(1rem, 2vw, 1.2rem); color:var(--text-dim); max-width:560px; margin-bottom:36px;
+  }
+  .hero-meta{display:flex; flex-wrap:wrap; gap:14px 28px; font-family:var(--font-mono); font-size:12.5px; color:var(--text-dim); margin-bottom:38px;}
+  .hero-meta span{color:var(--text);}
+  .cta-row{display:flex; flex-wrap:wrap; gap:14px;}
+  .btn{
+    font-family:var(--font-mono); font-size:13px; padding:12px 22px; border-radius:6px;
+    border:1px solid var(--border); transition:all 0.2s; display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn-primary{background:var(--green); color:#06130c; border-color:var(--green); font-weight:600;}
+  .btn-primary:hover{background:#2ec471; transform:translateY(-1px);}
+  .btn-ghost:hover{border-color:var(--amber); color:var(--amber); transform:translateY(-1px);}
+
+  /* status board strip */
+  .status-board{
+    margin-top:56px; border:1px solid var(--border); border-radius:10px; overflow:hidden;
+    background:var(--surface);
+  }
+  .status-board-head{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:10px 16px; border-bottom:1px solid var(--border);
+    font-family:var(--font-mono); font-size:11px; color:var(--text-dim);
+  }
+  .status-board-head .live{color:var(--green); display:flex; align-items:center; gap:6px;}
+  .status-grid{display:grid; grid-template-columns:repeat(3,1fr);}
+  .status-grid > div{padding:16px; border-right:1px solid var(--border);}
+  .status-grid > div:last-child{border-right:none;}
+  @media (max-width:640px){
+    .status-grid{grid-template-columns:1fr;}
+    .status-grid > div{border-right:none; border-bottom:1px solid var(--border);}
+    .status-grid > div:last-child{border-bottom:none;}
+  }
+  .status-label{font-family:var(--font-mono); font-size:10.5px; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:6px;}
+  .status-value{font-family:var(--font-display); font-size:20px; font-weight:600;}
+
+  /* ---- Sections ---- */
+  section{padding:64px 0; border-top:1px solid var(--border); position:relative;}
+  .sec-head{display:flex; align-items:baseline; gap:14px; margin-bottom:36px;}
+  .sec-path{font-family:var(--font-mono); font-size:12px; color:var(--amber);}
+  .sec-title{font-family:var(--font-display); font-size:1.7rem; font-weight:600;}
+
+  /* about */
+  .about-text{max-width:640px; color:var(--text-dim); font-size:1.02rem;}
+  .about-text strong{color:var(--text); font-weight:600;}
+
+  /* education */
+  .edu-item{
+    display:grid; grid-template-columns:110px 1fr; gap:20px; padding:20px 0; border-bottom:1px solid var(--border);
+  }
+  .edu-item:last-child{border-bottom:none;}
+  .edu-year{font-family:var(--font-mono); font-size:12px; color:var(--text-dim);}
+  .edu-name{font-weight:600; margin-bottom:4px;}
+  .edu-sub{font-size:0.92rem; color:var(--text-dim);}
+  .edu-score{font-family:var(--font-mono); font-size:12px; color:var(--green); margin-top:6px; display:inline-block;}
+  @media (max-width:600px){ .edu-item{grid-template-columns:1fr;} }
+
+  /* projects */
+  .project{
+    border:1px solid var(--border); border-radius:10px; background:var(--surface);
+    padding:26px 26px 24px; margin-bottom:20px; position:relative; overflow:hidden;
+  }
+  .project.flagship{border-color:rgba(61,220,132,0.35);}
+  .project.flagship::before{
+    content:''; position:absolute; top:0; left:0; width:3px; height:100%; background:var(--green);
+  }
+  .proj-top{display:flex; justify-content:space-between; align-items:flex-start; gap:16px; margin-bottom:8px; flex-wrap:wrap;}
+  .proj-name{font-family:var(--font-display); font-size:1.2rem; font-weight:600;}
+  .proj-tag{
+    font-family:var(--font-mono); font-size:10.5px; padding:4px 9px; border-radius:100px;
+    border:1px solid var(--border); color:var(--text-dim); white-space:nowrap;
+  }
+  .proj-tag.live{color:var(--green); border-color:rgba(61,220,132,0.4);}
+  .proj-date{font-family:var(--font-mono); font-size:11.5px; color:var(--text-dim); margin-bottom:14px;}
+  .proj-desc{color:var(--text-dim); font-size:0.95rem; margin-bottom:16px;}
+  .proj-desc ul{list-style:none; display:flex; flex-direction:column; gap:8px;}
+  .proj-desc li{position:relative; padding-left:18px;}
+  .proj-desc li::before{content:'—'; position:absolute; left:0; color:var(--amber);}
+  .stack{display:flex; flex-wrap:wrap; gap:8px;}
+  .chip{font-family:var(--font-mono); font-size:11px; padding:5px 10px; background:var(--surface-2); border-radius:5px; color:var(--text-dim);}
+  .note-flag{font-family:var(--font-mono); font-size:11px; color:var(--amber); margin-top:14px; display:block;}
+
+  /* skills */
+  .skill-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:28px;}
+  .skill-cat-label{font-family:var(--font-mono); font-size:11px; color:var(--amber); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:14px;}
+  .skill-tags{display:flex; flex-wrap:wrap; gap:8px;}
+  .skill-tag{
+    font-family:var(--font-mono); font-size:12px; padding:6px 12px; border:1px solid var(--border); border-radius:6px; color:var(--text);
+    transition:border-color 0.2s;
+  }
+  .skill-tag:hover{border-color:var(--green);}
+
+  /* certs / languages */
+  .two-col{display:grid; grid-template-columns:1fr 1fr; gap:40px;}
+  @media (max-width:640px){ .two-col{grid-template-columns:1fr;} }
+  .mini-list{display:flex; flex-direction:column; gap:10px;}
+  .mini-list li{list-style:none; display:flex; justify-content:space-between; font-size:0.92rem; padding:10px 0; border-bottom:1px solid var(--border);}
+  .mini-list li:last-child{border-bottom:none;}
+  .mini-list .lv{font-family:var(--font-mono); font-size:11px; color:var(--text-dim);}
+
+  /* contact / footer */
+  footer{padding:70px 0 50px; border-top:1px solid var(--border);}
+  .contact-title{font-family:var(--font-display); font-size:2rem; font-weight:600; margin-bottom:14px;}
+  .contact-sub{color:var(--text-dim); margin-bottom:30px; max-width:480px;}
+  .contact-links{display:flex; flex-wrap:wrap; gap:14px; margin-bottom:48px;}
+  .foot-bottom{display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; font-family:var(--font-mono); font-size:11px; color:var(--text-dim); padding-top:24px; border-top:1px solid var(--border);}
+
+  .reveal{opacity:0; transform:translateY(14px); transition:opacity 0.6s ease, transform 0.6s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<nav>
+  <div class="wrap">
+    <div class="logo"><span class="dot"></span> MOHAN KUMAR V</div>
+    <div class="navlinks">
+      <a href="#about">/about</a>
+      <a href="#education">/education</a>
+      <a href="#projects">/projects</a>
+      <a href="#skills">/skills</a>
+      <a href="#contact">/contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow"><span class="rule"></span> FINAL-YEAR ISE ENGINEER · BENGALURU</div>
+    <h1>Building systems that<br>respond to the <span>real world</span>.</h1>
+    <p class="tagline">Information Science &amp; Engineering undergraduate focused on embedded systems, IoT, and applied problem-solving with Java and DSA. Currently building an ambulance traffic-signal preemption system toward IEEE publication.</p>
+    <div class="hero-meta">
+      <div>GPA <span>8.44/10.0</span></div>
+      <div>Languages <span>English · Kannada · Hindi</span></div>
+      <div>Based in <span>Bengaluru, India</span></div>
+    </div>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="mailto:mohankumar97v@gmail.com">Get in touch</a>
+      <a class="btn btn-ghost" href="https://github.com/Mk22v" target="_blank" rel="noopener">GitHub ↗</a>
+      <a class="btn btn-ghost" href="https://linkedin.com/in/mk97v" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+
+    <div class="status-board reveal">
+      <div class="status-board-head">
+        <span>system_status.log</span>
+        <span class="live"><span class="dot" style="width:6px;height:6px;"></span> ACTIVE</span>
+      </div>
+      <div class="status-grid">
+        <div>
+          <div class="status-label">Flagship Project</div>
+          <div class="status-value" style="font-size:16px;">PRESTO</div>
+        </div>
+        <div>
+          <div class="status-label">Target</div>
+          <div class="status-value" style="font-size:16px;">IEEE Publication</div>
+        </div>
+        <div>
+          <div class="status-label">Core Stack</div>
+          <div class="status-value" style="font-size:16px;">Java · C++ · SQL</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-path">~/about</span><span class="sec-title">Summary</span></div>
+    <p class="about-text reveal">Resourceful Information Science undergraduate with strong proficiency in <strong>Java</strong> and <strong>data structures &amp; algorithms</strong>, well-versed in software engineering fundamentals. Experienced working in a four-person team to resolve difficult technical problems and ship efficient, real-world solutions — from database systems to IoT-based embedded platforms. Passionate about applying modern technology to problems that matter, with a particular interest in systems that operate under real-time constraints.</p>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-path">~/education</span><span class="sec-title">Education</span></div>
+
+    <div class="edu-item reveal">
+      <div class="edu-year">2023 — Present</div>
+      <div>
+        <div class="edu-name">B.E. Information Science &amp; Engineering</div>
+        <div class="edu-sub">SJB Institute of Technology, Bengaluru (VTU) · 6 semesters completed</div>
+        <span class="edu-score">GPA 8.44 / 10.0</span>
+        <div class="edu-sub" style="margin-top:8px;">Coursework: Data Structures, Algorithms, Computer Networking, Software Engineering, Operating Systems, Artificial Intelligence, Machine Learning</div>
+      </div>
+    </div>
+
+    <div class="edu-item reveal">
+      <div class="edu-year">2021 — 2023</div>
+      <div>
+        <div class="edu-name">Pre-University Education</div>
+        <div class="edu-sub">KLE Society's S. Nijalingappa College, Bengaluru</div>
+        <span class="edu-score">92.5%</span>
+      </div>
+    </div>
+
+    <div class="edu-item reveal">
+      <div class="edu-year">2020 — 2021</div>
+      <div>
+        <div class="edu-name">Secondary Education</div>
+        <div class="edu-sub">Lewa English High School, Bengaluru</div>
+        <span class="edu-score">96.5%</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-path">~/projects</span><span class="sec-title">Projects</span></div>
+
+    <div class="project flagship reveal">
+      <div class="proj-top">
+        <div class="proj-name">PRESTO — Ambulance Signal Preemption System</div>
+        <span class="proj-tag live">In progress</span>
+      </div>
+      <div class="proj-date">Capstone Project · 2025 — Present · Team of 4</div>
+      <div class="proj-desc">
+        <ul>
+          <li>IoT-based system that preempts traffic signals for approaching ambulances, cutting emergency response delays at junctions.</li>
+          <li>Built a Flask/SocketIO backend with MQTT (Mosquitto) messaging and a React + Vite + Tailwind live dashboard for junction status and event logging.</li>
+          <li>Designed the core preemption algorithm — ETA threshold, clearance buffer, and post-clearance timer — validated across three real Bengaluru junctions.</li>
+          <li>Working toward IEEE conference publication with Phase 2 (ESP32 firmware, mobile app, hardware integration) in progress.</li>
+        </ul>
+      </div>
+      <div class="stack">
+        <span class="chip">Flask</span><span class="chip">SocketIO</span><span class="chip">MQTT</span><span class="chip">React</span><span class="chip">Vite</span><span class="chip">Tailwind</span><span class="chip">ESP32</span>
+      </div>
+      <span class="note-flag">⚑ Added from project context beyond the resume — remove or edit if you'd rather present this differently.</span>
+    </div>
+
+    <div class="project reveal">
+      <div class="proj-top">
+        <div class="proj-name">Blood Connect — Database Management System</div>
+        <span class="proj-tag">Nov 2025</span>
+      </div>
+      <div class="proj-desc">
+        <ul>
+          <li>Developed a database-driven application using SQL to connect donors and recipients.</li>
+          <li>Implemented full CRUD operations and applied normalization for data integrity.</li>
+        </ul>
+      </div>
+      <div class="stack"><span class="chip">SQL</span><span class="chip">Database Design</span></div>
+    </div>
+
+    <div class="project reveal">
+      <div class="proj-top">
+        <div class="proj-name">FitTrack</div>
+        <span class="proj-tag">Oct 2025</span>
+      </div>
+      <div class="proj-desc">
+        <ul>
+          <li>Built a full-stack web application to track daily fitness activity — steps, calories burned, and workouts — to monitor health progress.</li>
+          <li>Applied SDLC principles across the build, with debugging and troubleshooting throughout.</li>
+        </ul>
+      </div>
+      <div class="stack"><span class="chip">Full-Stack</span><span class="chip">SDLC</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-path">~/skills</span><span class="sec-title">Skills</span></div>
+    <div class="skill-grid">
+      <div>
+        <div class="skill-cat-label">Technical</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Java</span><span class="skill-tag">C++</span><span class="skill-tag">SQL</span><span class="skill-tag">JavaScript</span><span class="skill-tag">Python</span>
+        </div>
+      </div>
+      <div>
+        <div class="skill-cat-label">Systems &amp; Concepts</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Data Structures</span><span class="skill-tag">Algorithms</span><span class="skill-tag">Computer Networking</span>
+        </div>
+      </div>
+      <div>
+        <div class="skill-cat-label">Working Style</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Teamwork</span><span class="skill-tag">Critical Thinking</span><span class="skill-tag">Problem Solving</span><span class="skill-tag">Work Leadership</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap two-col">
+    <div>
+      <div class="sec-head"><span class="sec-path">~/certs</span><span class="sec-title" style="font-size:1.2rem;">Certifications</span></div>
+      <ul class="mini-list">
+        <li>Automated Software Testing with Python <span class="lv">Certified</span></li>
+        <li>Machine Learning Techniques in MATLAB <span class="lv">Certified</span></li>
+      </ul>
+    </div>
+    <div>
+      <div class="sec-head"><span class="sec-path">~/languages</span><span class="sec-title" style="font-size:1.2rem;">Languages</span></div>
+      <ul class="mini-list">
+        <li>English <span class="lv">Fluent</span></li>
+        <li>Kannada <span class="lv">Fluent</span></li>
+        <li>Hindi <span class="lv">Fluent</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="sec-path" style="margin-bottom:10px;">~/contact</div>
+    <div class="contact-title">Let's build something.</div>
+    <p class="contact-sub">Open to internship and entry-level opportunities in embedded systems, backend engineering, or software development.</p>
+    <div class="contact-links">
+      <a class="btn btn-primary" href="mailto:mohankumar97v@gmail.com">mohankumar97v@gmail.com</a>
+      <a class="btn btn-ghost" href="tel:+918660814282">+91 86608 14282</a>
+      <a class="btn btn-ghost" href="https://github.com/Mk22v" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn btn-ghost" href="https://linkedin.com/in/mk97v" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Mohan Kumar V</span>
+      <span>Bengaluru, Karnataka, India</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, {threshold:0.15});
+  revealEls.forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>

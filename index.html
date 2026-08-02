@@ -227,7 +227,8 @@
     <div class="rail-dot" data-target="education"></div>
     <div class="rail-dot" data-target="projects"></div>
     <div class="rail-dot" data-target="skills"></div>
-    <div class="rail-dot" data-target="contact"></div>
+<div class="rail-dot" data-target="writing"></div>
+<div class="rail-dot" data-target="contact"></div>
   </div>
 </div>
 
@@ -239,7 +240,8 @@
       <a href="#education" data-target="education">Education</a>
       <a href="#projects" data-target="projects">Projects</a>
       <a href="#skills" data-target="skills">Skills</a>
-      <a href="#contact" data-target="contact">Contact</a>
+<a href="#writing" data-target="writing">Writing</a>
+<a href="#contact" data-target="contact">Contact</a>
       <span class="nav-indicator" id="navIndicator"></span>
     </div>
   </div>
@@ -394,6 +396,26 @@
   </div>
 </section>
 
+  <section id="writing">
+  <div class="wrap">
+    <div class="sec-title reveal">Writing</div>
+
+    <div class="project reveal">
+      <div class="proj-top">
+        <div class="proj-name">Escaping Google Photos: migrating 25GB to a self-hosted server</div>
+        <div class="proj-date">Aug 2026</div>
+      </div>
+      <div class="proj-desc">
+        When my free Google One student storage expired, I self-hosted my photo library with Immich and Docker — including debugging a WSL2 sleep/wake issue that silently stalled the migration halfway through.
+      </div>
+      <div class="stack">
+        <span class="chip">Docker</span><span class="chip">Self-hosting</span><span class="chip">Immich</span>
+      </div>
+      <a class="btn btn-ghost" href="writing/self-hosted-photos.html" style="margin-top:14px; display:inline-block;">Read the write-up →</a>
+    </div>
+  </div>
+</section>
+
 <footer id="contact">
   <div class="wrap">
     <div class="contact-title reveal">Let's connect</div>
@@ -430,7 +452,7 @@
   const railFill = document.getElementById('railFill');
   const railDots = Array.from(document.querySelectorAll('.rail-dot'));
   const topBtn = document.getElementById('topBtn');
-  const sectionIds = ['about','education','projects','skills','contact'];
+ const sectionIds = ['about','education','projects','skills','writing','contact'];
   const sections = sectionIds.map(id=>document.getElementById(id)).filter(Boolean);
 
   function moveIndicatorTo(anchor){
